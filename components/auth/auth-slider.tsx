@@ -78,6 +78,8 @@ export const AuthSlider = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* Add Images */}
             </div>
         </div>
     )
