@@ -1,62 +1,62 @@
 "use client"
 
-import { Form, useForm } from "react-hook-form"
-import { Button } from "../ui/button"
-import { Footer } from "./footer"
-import { Header } from "./header"
-import { InputMaterial } from "./input-material"
-import { useState, useTransition } from "react"
-import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginSchema } from "@/schemas/auth-schema";
-import { z } from "zod";
-import { FormControl, FormField, FormItem } from "../ui/form"
-import { Input } from "../ui/input"
-import { FormError } from "./form-error"
-import { FormSuccess } from "./form-success"
-import { LoginAction } from "@/actions/login-action"
+import * as z from "zod";
+import { Header } from "./header";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { RegisterSchema } from "@/schemas/auth-schema";
+import { InputMaterial } from "./input-material";
+import { Button } from "../ui/button";
+import { FormError } from "./form-error";
+import { FormSuccess } from "./form-success";
+import { Footer } from "./footer";
+import { useState, useTransition } from "react";
+import { RegisterAction } from "@/actions/register-action";
 
 
-
-export const LoginForm = () => {
+export const RegisterForm = () => {
 
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
     const [isPending, startTransition] = useTransition();
 
-    const [email, setEmail] = useState<string | null>(null);
-    const [password, setPassword] = useState<string | null>(null);
-    
-    const { register, handleSubmit, formState: { errors }} = useForm<z.infer<typeof LoginSchema>>({
-        resolver: zodResolver(LoginSchema),
+    const { register, handleSubmit, formState: { errors }} = useForm({
+        resolver: zodResolver(RegisterSchema),
         defaultValues: {
+            username: "",
             email: "",
             password: ""
         }
     });
 
-
-    const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+    const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
         console.log(values);
-
         startTransition(() => {
-            LoginAction(values)
+            RegisterAction(values)
             .then((data) => {
-                setError(data?.error as string);
-                setSuccess(data?.success as string);
+                setError(data.error as string)
+                setSuccess(data.success as string)
             })
-        })
+        });
     };
-
 
     return (
         <div className="h-full flex flex-col items-center justify-center text-white">
             <div className="flex flex-col w-72 space-y-8">
                 <Header 
-                    heading="Sign in to Koi"
+                    heading="Register for Koi"
                     subHeading="Enter your account details below"
                 />
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-10 relative">
+
+                    <InputMaterial 
+                        inputLabel="username"
+                        {...register("username")}
+                        name="username"
+                        errorState={!!errors.username?.message}
+                    />
+                    {errors.username && (<p className="absolute top-0 text-xs text-red-500">{errors.username.message}</p>)}
 
                     <InputMaterial 
                         inputLabel="Email Address"
@@ -64,7 +64,7 @@ export const LoginForm = () => {
                         name="email"
                         errorState={!!errors.email?.message}
                     />
-                    {errors.email && (<p className="absolute top-0 text-xs text-red-500">{errors.email.message}</p>)}
+                    {errors.email && (<p className="absolute bottom-36 text-xs text-red-500">{errors.email.message}</p>)}
 
 
                     <InputMaterial  
@@ -82,7 +82,6 @@ export const LoginForm = () => {
 
                 </form>
 
-                
                 <FormError message={error!}/>
                 <FormSuccess message={success!}/>
 
@@ -90,9 +89,9 @@ export const LoginForm = () => {
 
 
                 <Footer 
-                    footerLabel="Don't have an account?"
-                    backButtonLabel="Get Started"
-                    backButtonHref="/auth/register"
+                    footerLabel="Already have an account?"
+                    backButtonLabel="Sigin in"
+                    backButtonHref="/auth/login"
                 />
             </div>
         </div>

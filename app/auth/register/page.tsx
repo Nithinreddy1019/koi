@@ -1,7 +1,9 @@
+import { RegisterForm } from "@/components/auth/register-form";
+
 const RegisterPage = () => {
     return (
-        <div>
-            asdasd
+        <div className="h-full">
+            <RegisterForm />
         </div>
     );
 }
