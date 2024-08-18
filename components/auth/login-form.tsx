@@ -76,7 +76,7 @@ export const LoginForm = () => {
                     {errors.password && (<p className="absolute bottom-16 text-xs text-red-500">{errors.password.message}</p>)}
 
 
-                    <Button type="submit" className="text-white w-full">
+                    <Button type="submit" className="text-white w-full" disabled={isPending}>
                         Sign in
                     </Button>
 

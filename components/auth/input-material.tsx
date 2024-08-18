@@ -9,7 +9,8 @@ interface InputMaterialProps {
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void,
     ref?: React.Ref<HTMLInputElement>,
     name?: string,
-    errorState: boolean
+    errorState: boolean,
+    disabled?: boolean
 }
 
 
@@ -17,7 +18,8 @@ export const InputMaterial = forwardRef<HTMLInputElement, InputMaterialProps>(({
     inputLabel,
     onChange,
     name,
-    errorState
+    errorState,
+    disabled
 }, ref) => {
     return (
         <div className="w-full">
@@ -28,6 +30,7 @@ export const InputMaterial = forwardRef<HTMLInputElement, InputMaterialProps>(({
                     ref={ref}
                     name={name}
                     onChange={onChange}
+                    disabled={disabled}
                 />
                 <span 
                     className="absolute top-0 left-0 text-sm peer-focus:-translate-y-5 peer-valid:-translate-y-5 duration-200 text-gray-400 pb-4"
