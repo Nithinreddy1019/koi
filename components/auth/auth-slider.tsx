@@ -5,6 +5,7 @@ import { Button } from "../ui/button"
 import Image from "next/image"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
+import { useRouter } from "next/navigation"
 
 
 
@@ -24,6 +25,8 @@ export const AuthSlider = () => {
             content: "Message your friends and call to know whereabouts."
         }
     ];
+
+    const router = useRouter();
 
     const [current, setCurrent] = useState(0);
 
@@ -52,7 +55,7 @@ export const AuthSlider = () => {
                 </div>
 
                 <div className="absolute top-0 left-16 h-full">
-                    <div className="relative top-4 flex item-center gap-x-2">
+                    <div className="relative top-4 flex item-center gap-x-2 cursor-pointer" role="button" onClick={() => router.push("/")}>
                         <Image 
                             src={"/koi-trans.png"}
                             alt="logo"
