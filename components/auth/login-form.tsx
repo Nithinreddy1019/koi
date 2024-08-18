@@ -13,6 +13,7 @@ import { FormControl, FormField, FormItem } from "../ui/form"
 import { Input } from "../ui/input"
 import { FormError } from "./form-error"
 import { FormSuccess } from "./form-success"
+import { LoginAction } from "@/actions/login-action"
 
 
 
@@ -36,7 +37,14 @@ export const LoginForm = () => {
 
     const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
         console.log(values);
-        console.log(errors)
+
+        startTransition(() => {
+            LoginAction(values)
+            .then((data) => {
+                setError(data?.error as string);
+                setSuccess(data?.success as string);
+            })
+        })
     }
 
 
