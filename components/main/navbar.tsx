@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { UserButton } from "./user-button"
+import { Searchfield } from "./search-field"
 
 
 export const Navbar = () => {
@@ -17,7 +18,9 @@ export const Navbar = () => {
                     <h3 className="text-2xl font-semibold text-sky-500">Koi</h3>
                 </Link>
 
-                <UserButton />
+                <Searchfield />
+
+                <UserButton className="sm:ms-auto"/>
             </div>
         </header>
     )
