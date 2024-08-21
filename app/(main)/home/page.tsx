@@ -9,9 +9,11 @@ const HomePage = () => {
     
 
     return (
-        <div>
-            Hello
-        </div>
+        <main className="h-[200vh] w-full ">
+            <div>
+                Home page
+            </div>
+        </main>
     );
 }
  
