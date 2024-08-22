@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,8 +22,8 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "./koi.png",
-        href: "/koi.png"
+        url: "./koi.jpeg",
+        href: "/koi.jpeg"
       }
     ]
   }
@@ -44,6 +45,7 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );

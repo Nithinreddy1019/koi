@@ -1,5 +1,6 @@
 "use client"
 
+import { PostEditor } from "@/components/posts/post-editor";
 import { useSession } from "next-auth/react";
 
 
@@ -11,7 +12,7 @@ const HomePage = () => {
     return (
         <main className="h-[200vh] w-full ">
             <div>
-                Home page
+                <PostEditor />
             </div>
         </main>
     );
