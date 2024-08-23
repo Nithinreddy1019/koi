@@ -1,18 +1,25 @@
-"use client"
 
+import { Post } from "@/components/posts/post";
 import { PostEditor } from "@/components/posts/post-editor";
-import { useSession } from "next-auth/react";
+import { db } from "@/lib/db";
+import { postDataIncludes } from "@/lib/types";
 
 
-const HomePage = () => {
+const HomePage = async () => {
     
-    const { data, status } = useSession();
+    const posts = await db.post.findMany({
+        include: postDataIncludes,
+        orderBy: { createdAt : "desc" },
+    })
     
 
     return (
-        <main className="h-[200vh] w-full ">
-            <div>
+        <main className="w-full min-w-0">
+            <div className="min-w-0 space-y-4">
                 <PostEditor />
+                {posts.map((post) => (
+                    <Post post={post} key={post.id}/>
+                ))}
             </div>
         </main>
     );

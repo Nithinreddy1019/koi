@@ -41,7 +41,7 @@ export const PostEditor = () => {
             <div className="flex gap-5">
                 <UserAvatar
                     avatarUrl={data?.user?.image} 
-                    className="hidden sm:inline"
+                    className="hidden sm:flex"
                 />
                 <EditorContent 
                     editor={editor}

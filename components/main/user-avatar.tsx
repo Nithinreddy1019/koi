@@ -26,7 +26,7 @@ export const UserAvatar = ({
                 />
             )}
             {!avatarUrl && (
-                <div className=" bg-secondary rounded-full h-9 w-9 flex items-center justify-center">
+                <div className={cn("bg-secondary rounded-full h-9 w-9 flex items-center justify-center", className)}>
                     <User 
                         className=""
                         strokeWidth={1.5}
