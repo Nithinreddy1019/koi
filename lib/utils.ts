@@ -19,4 +19,13 @@ export const FormatdateRelative = (from: Date) => {
       return formatDate(from, "MMM d, yyyy");
     }
   };
+};
+
+
+export const formatNumber = (n: number):string=> {
+
+  return Intl.NumberFormat("en-US", {
+    notation: "compact",
+    maximumFractionDigits: 1
+  }).format(n)
 }
