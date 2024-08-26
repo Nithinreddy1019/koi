@@ -13,7 +13,7 @@ const HomePage = () => {
 
     return (
         <main className="w-full min-w-0 flex gap-4">
-            <div className="min-w-0 space-y-4">
+            <div className="min-w-0 space-y-4 w-full">
                 <PostEditor />
                 <Feed />
             </div>

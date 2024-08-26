@@ -1,10 +1,16 @@
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
-import { postDataIncludes } from "@/lib/types";
+import { postDataIncludes, PostsPage } from "@/lib/types";
+import { NextRequest } from "next/server";
 
 
-export async function GET() {
+export async function GET(req: NextRequest) {
     try {
+        const cursor = req.nextUrl.searchParams.get("cursor") || undefined;
+
+        const pageSize = 10;
+
+
         const session = await auth();
 
         if(!session?.user) {
@@ -13,11 +19,20 @@ export async function GET() {
 
         const posts = await db.post.findMany({
             include: postDataIncludes,
-            orderBy: { createdAt: "desc" }
+            orderBy: { createdAt: "desc" },
+            take: pageSize + 1,
+            cursor: cursor ? { id: cursor } : undefined
         });
 
-        return Response.json(posts);
-        
+        const nextCursor = posts.length > pageSize ? posts[pageSize].id : null;
+
+        const data: PostsPage = {
+            posts: posts.slice(0, pageSize),
+            nextCursor
+        } 
+
+        return Response.json(data);
+
     } catch (error) {
         return Response.json({ error: "Internal server error" }, { status: 500 });
     }

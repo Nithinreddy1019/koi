@@ -37,7 +37,7 @@ export const PostEditor = () => {
 
 
     return (
-        <div className="flex flex-col gap-5 rounded-xl bg-card p-4 shadow-sm">
+        <div className="flex flex-col gap-5 rounded-xl bg-card p-4 shadow-sm w-full">
             <div className="flex gap-5">
                 <UserAvatar
                     avatarUrl={data?.user?.image} 
