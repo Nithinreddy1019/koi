@@ -6,6 +6,8 @@ import axios from "axios";
 import { Loader } from "lucide-react";
 import { Post } from "../posts/post";
 import { Button } from "../ui/button";
+import { InfiniteScrollContainer } from "./infinite-scroll-container";
+import { PostsLoadingSkeleton } from "./posts-loading-skeleton";
 
 
 export const Feed = () => {
@@ -37,8 +39,14 @@ export const Feed = () => {
 
     if(status === "pending") {
         return (
-            <div className="w-full"> 
-                <Loader className="mx-auto h-5 w-5 animate-spin"/>
+            <PostsLoadingSkeleton />
+        )
+    }
+
+    if(status === "success" && !posts.length && !hasNextPage) {
+        return (
+            <div className="text-center text-muted-foreground">
+                No has posted anything yet.
             </div>
         )
     }
@@ -52,13 +60,18 @@ export const Feed = () => {
     }
 
     return (
-        <div className="space-y-4">
+        <InfiniteScrollContainer 
+            className="space-y-4"
+            onBottomReached={() => hasNextPage && !isFetching && fetchNextPage()}
+        >
             {posts.map((post) => (
                 <Post key={post.id} post={post}/>
             ))}
-            <Button onClick={() => fetchNextPage()}>
-                Load more
-            </Button>
-        </div>
+            {isFetchingNextPage && (
+                <div className="w-full my-2"> 
+                    <Loader className="mx-auto h-5 w-5 animate-spin"/>
+                </div>
+            )}
+        </InfiniteScrollContainer>
     )
 }
