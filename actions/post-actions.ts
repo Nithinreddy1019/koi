@@ -24,3 +24,25 @@ export const SubmitPostAction = async (input: string) => {
 
     return newPost;
 };
+
+
+export const deletePostAction = async (id: string) => {
+    const session = await auth();
+
+    if(!session?.user) throw new Error ("Unauthorized");
+
+    const post = await db.post.findUnique({
+        where: { id: id }
+    });
+
+    if(!post) throw new Error ("Post does not exist");
+
+    if(post.userId !== session.user.id) throw new Error("Unauthorized");
+
+    const deletedPost = await db.post.delete({
+        where: { id: id },
+        include: postDataIncludes
+    });
+    
+    return deletedPost;
+}

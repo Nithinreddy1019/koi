@@ -8,7 +8,7 @@ import { UserAvatar } from "../main/user-avatar";
 import { useSession } from "next-auth/react";
 import { Button } from "../ui/button";
 import "./styles.css";
-import { useSubmitPostMutation } from "@/actions/mutation";
+import { useSubmitPostMutation } from "@/actions/mutations";
 import { Loader } from "lucide-react";
 
 

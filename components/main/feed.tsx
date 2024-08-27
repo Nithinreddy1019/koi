@@ -8,6 +8,7 @@ import { Post } from "../posts/post";
 import { Button } from "../ui/button";
 import { InfiniteScrollContainer } from "./infinite-scroll-container";
 import { PostsLoadingSkeleton } from "./posts-loading-skeleton";
+import { DeletePostDialog } from "../posts/delete-post-dialog";
 
 
 export const Feed = () => {
@@ -59,7 +60,7 @@ export const Feed = () => {
         )
     }
 
-    
+
     return (
         <InfiniteScrollContainer 
             className="space-y-4"
