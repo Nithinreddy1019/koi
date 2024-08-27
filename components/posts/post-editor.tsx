@@ -8,11 +8,15 @@ import { UserAvatar } from "../main/user-avatar";
 import { useSession } from "next-auth/react";
 import { Button } from "../ui/button";
 import "./styles.css";
+import { useSubmitPostMutation } from "@/actions/mutation";
+import { Loader } from "lucide-react";
 
 
 export const PostEditor = () => {
 
     const { data, status } = useSession();
+
+    const mutation = useSubmitPostMutation();
 
     const editor = useEditor({
         extensions: [
@@ -31,9 +35,13 @@ export const PostEditor = () => {
     }) || " ";
 
     const onSubmit = async () => {
-        await SubmitPostAction(input);
-        editor?.commands.clearContent();
+        mutation.mutate(input, {
+            onSuccess: () => {
+                editor?.commands.clearContent();
+            }
+        })
     };
+
 
 
     return (
@@ -51,11 +59,18 @@ export const PostEditor = () => {
             <div className="flex justify-end">
                 <Button
                     onClick={onSubmit}
-                    className="min-w-20 "
-                    disabled={!input.trim()}
+                    className="min-w-20 flex gap-2"
+                    disabled={!input.trim() || mutation.isPending}
                     size={"sm"}
                 >
-                    Post
+                    {mutation.isPending ? (
+                        <>
+                            <Loader className="h-4 w-4 animate-spin"/>
+                            <p>Post</p>
+                        </>
+                    ) : (
+                        "Post"
+                    )}
                 </Button>
             </div>
         </div>

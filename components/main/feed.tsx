@@ -59,6 +59,7 @@ export const Feed = () => {
         )
     }
 
+    
     return (
         <InfiniteScrollContainer 
             className="space-y-4"
